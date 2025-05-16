@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<!-- levantar con: python -m http.server 5000 --bind 0.0.0.0 -->
+<head>
+    <meta charset="UTF-8">
+    <title>Spelling Game</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .word {
+            font-size: 2em;
+            margin: 20px;
+        }
+
+        .result {
+            font-size: 1.5em;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Spelling Bee</h1>
+
+    <label for="difficulty">Select Difficulty:</label>
+    <select id="difficulty">
+        <option value="facil">Easy</option>
+        <option value="medio">Medium</option>
+        <option value="dificil">Hard</option>
+    </select>
+    <button onclick="nuevaPalabra()">Get New Word</button>
+
+    <div class="word" id="wordDisplay"></div>
+    <button id="startSpelling" onclick="iniciarEscucha()" disabled>🎤 Start Spelling</button>
+
+    <div class="result" id="resultText"></div>
+
+    <!-- Referencia al archivo JS externo -->
+    <script src="script.js"></script>
+
+</body>
+</html>
