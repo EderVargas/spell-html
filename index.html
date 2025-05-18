@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <!-- levantar con: python -m http.server 8000 --bind 0.0.0.0 -->
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <title>Spelling Bee</title>
@@ -14,21 +15,31 @@
 
     <div class="selector">
       <label for="difficulty">Select Difficulty:</label>
-      <select id="difficulty">
+      <select id="difficulty" onchange="reiniciarPalabrasUsadas()">
         <option value="facil">Easy</option>
         <option value="medio">Medium</option>
         <option value="dificil">Hard</option>
       </select>
-      <button onclick="nuevaPalabra()">🔁 New Word</button>
+      <!-- <button onclick="nuevaPalabraSinRepetir()">🔁 New Word</button> -->
+      <!-- <button onclick="nuevaPalabra()">🔁 New Word</button> -->
+      <div class="button-row">
+        <button class="half-button blue" onclick="nuevaPalabraSinRepetir()">🔁 New Word</button>
+        <button id="speakAgain" class="half-button purple" onclick="speakWord(document.getElementById('wordDisplay').textContent)" disabled>
+          🔊 Speak again
+        </button>
+      </div>
     </div>
 
     <div class="word" id="wordDisplay">---</div>
 
     <button id="startSpelling" onclick="iniciarEscucha()" disabled>🎤 Start Spelling</button>
-
     <div class="result" id="resultText"></div>
+    <br>
+    <button id="restartWord" onclick="reiniciarPalabrasUsadas()">↻ Restart words</button>
+
   </div>
 
-  <script src="script.js"></script>
+  <script src="script.min.js"></script>
 </body>
+
 </html>

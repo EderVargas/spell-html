@@ -1,5 +1,7 @@
 let palabras = {};
 let palabraActual = "";
+const palabrasUsadasPorNivel = {};
+
 
 fetch('assets/datos.json')
     .then(response => response.json())
@@ -9,7 +11,54 @@ fetch('assets/datos.json')
         alert("No se pudieron cargar las palabras.");
     });
 
+// Función para obtener y mostrar una nueva palabra sin repetir
+function nuevaPalabraSinRepetir() {
+    const nivel = document.getElementById('difficulty').value;
+    const lista = palabras[nivel];
+    if (!lista || lista.length === 0) {
+        alert("No hay palabras cargadas para este nivel.");
+        return;
+    }
+
+    // Inicializa la lista de palabras usadas si no existe
+    if (!palabrasUsadasPorNivel[nivel]) {
+        palabrasUsadasPorNivel[nivel] = [];
+    }
+
+    // Filtra palabras que aún no han sido usadas
+    const restantes = lista.filter(p => !palabrasUsadasPorNivel[nivel].includes(p));
+
+    if (restantes.length === 0) {
+        alert("Ya se usaron todas las palabras para este nivel. Reinicia si deseas comenzar de nuevo.");
+        return;
+    }
+
+    // Selecciona palabra aleatoria y la marca como usada
+    palabraActual = restantes[Math.floor(Math.random() * restantes.length)];
+    palabrasUsadasPorNivel[nivel].push(palabraActual);
+
+    // Muestra la palabra en pantalla
+    document.getElementById('wordDisplay').textContent = palabraActual;
+    document.getElementById('resultText').textContent = '';
+    document.getElementById('startSpelling').disabled = false;
+    document.getElementById('speakAgain').disabled = false;
+    speakWord(palabraActual);
+
+}
+
+function reiniciarPalabrasUsadas() {
+    document.getElementById('resultText').textContent = '';
+    const nivel = document.getElementById('difficulty').value;
+    palabrasUsadasPorNivel[nivel] = [];
+    // alert("Las palabras usadas para el nivel han sido reiniciadas.");
+}
+
+/**
+ * @deprecated since 1.1, use nuevaPalabraSinRepetir instead
+ * @returns nueva palabra version 1.0
+ */
 function nuevaPalabra() {
+    debugger
     const nivel = document.getElementById('difficulty').value;
     const lista = palabras[nivel];
     if (!lista || lista.length === 0) {
@@ -58,8 +107,9 @@ function iniciarEscucha() {
             const spellingOk = deletreada === palabraActual;
 
             document.getElementById('resultText').innerHTML =
-                `🧩 Spelled: ${deletreada}<br> ` +
-                (spellingOk ? '✅ Correct!' : '❌ Incorrect.');
+                `<strong>🎧 Heard:</strong> ${spoken}<br>` +
+                `<strong>🧩 Spelled:</strong> ${deletreada}<br> ` +
+                `<strong>${(spellingOk ? '✅ Correct!' : '❌ Incorrect.')}</strong>`;
 
             document.getElementById('startSpelling').textContent = '🎤 Start Spelling';
 
@@ -87,4 +137,11 @@ function interpretarSpelling(texto) {
     }
 
     return resultado;
+}
+
+function speakWord(text) {
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US'; // idioma inglés americano
+    utterance.rate = 0.9; // velocidad un poco más lenta para mejor claridad
+    speechSynthesis.speak(utterance);
 }
