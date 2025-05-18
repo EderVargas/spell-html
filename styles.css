@@ -145,3 +145,6 @@ button:disabled {
     flex-direction: column;
   }
 }
+.hidden {
+  display: none;
+}

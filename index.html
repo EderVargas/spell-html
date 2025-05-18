@@ -4,7 +4,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Spelling Bee</title>
+  <title>🐝 Spelling Bee</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="styles.css">
 </head>
@@ -20,11 +20,15 @@
         <option value="medio">Medium</option>
         <option value="dificil">Hard</option>
       </select>
+      <label>
+        <input type="checkbox" id="showWordCheckbox" onchange="actualizarVisibilidadPalabra()" checked> Show word
+      </label>
       <!-- <button onclick="nuevaPalabraSinRepetir()">🔁 New Word</button> -->
       <!-- <button onclick="nuevaPalabra()">🔁 New Word</button> -->
       <div class="button-row">
-        <button class="half-button blue" onclick="nuevaPalabraSinRepetir()">🔁 New Word</button>
-        <button id="speakAgain" class="half-button purple" onclick="speakWord(document.getElementById('wordDisplay').textContent)" disabled>
+        <button id="newWord" class="half-button blue" onclick="nuevaPalabraSinRepetir()">🔁 New Word</button>
+        <button id="speakAgain" class="half-button purple"
+          onclick="speakWord(document.getElementById('wordDisplay').textContent)" disabled>
           🔊 Speak again
         </button>
       </div>

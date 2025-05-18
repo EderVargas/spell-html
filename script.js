@@ -13,6 +13,7 @@ fetch('assets/datos.json')
 
 // Función para obtener y mostrar una nueva palabra sin repetir
 function nuevaPalabraSinRepetir() {
+    actualizarVisibilidadPalabra()
     const nivel = document.getElementById('difficulty').value;
     const lista = palabras[nivel];
     if (!lista || lista.length === 0) {
@@ -40,8 +41,9 @@ function nuevaPalabraSinRepetir() {
     // Muestra la palabra en pantalla
     document.getElementById('wordDisplay').textContent = palabraActual;
     document.getElementById('resultText').textContent = '';
-    document.getElementById('startSpelling').disabled = false;
-    document.getElementById('speakAgain').disabled = false;
+    // document.getElementById('startSpelling').disabled = false;
+    // document.getElementById('speakAgain').disabled = false;
+    desHabilitaBotonesSpell(false);
     speakWord(palabraActual);
 
 }
@@ -92,6 +94,7 @@ function iniciarEscucha() {
     function escucharSpelling() {
         document.getElementById('startSpelling').textContent = 'Listening...';
         document.getElementById('resultText').textContent = "Spelling (use 'capital' and 'space' if you need)...";
+        desHabilitaBotonesSpell(true);
         recognition.start();
     }
 
@@ -112,12 +115,21 @@ function iniciarEscucha() {
                 `<strong>${(spellingOk ? '✅ Correct!' : '❌ Incorrect.')}</strong>`;
 
             document.getElementById('startSpelling').textContent = '🎤 Start Spelling';
+            desHabilitaBotonesSpell(false);
+            document.getElementById('wordDisplay').classList.remove('hidden');
 
             paso = 1;
         }
     };
 
     escucharSpelling();
+}
+
+function desHabilitaBotonesSpell(disabled) {
+    document.getElementById('startSpelling').disabled = disabled;
+    document.getElementById('speakAgain').disabled = disabled;
+    document.getElementById('newWord').disabled = disabled;
+    document.getElementById('restartWord').disabled = disabled;
 }
 
 function interpretarSpelling(texto) {
@@ -140,8 +152,17 @@ function interpretarSpelling(texto) {
 }
 
 function speakWord(text) {
+    actualizarVisibilidadPalabra();
     const utterance = new SpeechSynthesisUtterance(text);
     utterance.lang = 'en-US'; // idioma inglés americano
     utterance.rate = 0.9; // velocidad un poco más lenta para mejor claridad
     speechSynthesis.speak(utterance);
 }
+
+
+function actualizarVisibilidadPalabra() {
+    const checkbox = document.getElementById('showWordCheckbox');
+    const wordDisplay = document.getElementById('wordDisplay');
+    wordDisplay.classList.toggle('hidden', !checkbox.checked);
+}
+// Comando uglificar uglifyjs script.js -c -m -o script.min.js
