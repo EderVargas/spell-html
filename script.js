@@ -83,6 +83,7 @@ function iniciarEscucha() {
         const palabraOk = finalPalabra === original;
 
         let resultadoHTML =
+            `<strong>🎧 Heard:</strong> ${spoken}<br>` +
             `<strong>🧩 Spelled:</strong> ${deletreada}<br>` +
             `<strong>📣 Said:</strong> ${finalPalabra}<br>` +
             ((spellingOk && palabraOk)
@@ -173,11 +174,11 @@ function speakWord(text) {
     u.rate = 0.9;
     speechSynthesis.speak(u);
 }
-|
-    function actualizarVisibilidadPalabra() {
-        const checkbox = document.getElementById('showWordCheckbox');
-        const wordDisplay = document.getElementById('wordDisplay');
-        wordDisplay.classList.toggle('hidden', !checkbox.checked);
-    }
+
+function actualizarVisibilidadPalabra() {
+    const checkbox = document.getElementById('showWordCheckbox');
+    const wordDisplay = document.getElementById('wordDisplay');
+    wordDisplay.classList.toggle('hidden', !checkbox.checked);
+}
 
 // Comando uglificar uglifyjs script.js -c -m -o script.min.js
