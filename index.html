@@ -25,18 +25,43 @@
       </label>
       <!-- <button onclick="nuevaPalabraSinRepetir()">🔁 New Word</button> -->
       <!-- <button onclick="nuevaPalabra()">🔁 New Word</button> -->
-      <div class="button-row">
+      <!-- <div class="button-row">
         <button id="newWord" class="half-button blue" onclick="nuevaPalabraSinRepetir()">🔁 New Word</button>
         <button id="speakAgain" class="half-button purple"
           onclick="speakWord(document.getElementById('wordDisplay').textContent)" disabled>
           🔊 Speak again
         </button>
+      </div> -->
+      <!-- Selector de modo -->
+      <label for="modeSelect">
+        Mode:
+        <select id="modeSelect" onchange="onChangeMode()">
+          <option value="oneStep" selected>One‑step</option>
+          <option value="multiStep">Multi‑step</option>
+        </select>
+      </label>
+
+      <!-- Botones de una sola modalidad (se muestran en oneStep) -->
+      <div class="button-row" id="oneStepButtons">
+        <button id="newWord" class="half-button blue" onclick="nuevaPalabraSinRepetir()">
+          🔁 New Word
+        </button>
+        <button id="speakAgain" class="half-button purple" onclick="speakWord(wordDisplay.textContent)" disabled>
+          🔊 Speak again
+        </button>
       </div>
+
+      <!-- Botón único para paso a paso (se muestra en multiStep) -->
+      <button id="stepSpellingBtn" class="half-button green hidden" onclick="proximoPaso()">
+        ▶️ Next Step
+      </button>
     </div>
 
     <div class="word" id="wordDisplay">---</div>
 
     <button id="startSpelling" onclick="iniciarEscucha()" disabled>🎤 Start Spelling</button>
+    <button id="stopListening" class="hidden">🛑 Stop Listening</button>
+
     <div class="result" id="resultText"></div>
     <br>
     <button id="restartWord" onclick="reiniciarPalabrasUsadas()">↻ Restart words</button>

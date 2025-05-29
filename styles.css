@@ -146,5 +146,33 @@ button:disabled {
   }
 }
 .hidden {
-  display: none;
+  display: none !important;
+}
+button#stopListening {
+  font-size: 1rem;
+  padding: 0.8rem 1rem;
+  background-color: #e63946; /* rojo suave */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+button#stopListening:hover:not(:disabled) {
+  background-color: #d62828;
+}
+/* Por claridad, un color distinto para el botón de paso a paso */
+button#stepSpellingBtn {
+  background-color: #16a34a; /* verde distinto */
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 0.8rem 1rem;
+  margin-top: 1rem;
+  cursor: pointer;
+}
+button#stepSpellingBtn:hover:not(:disabled) {
+  background-color: #15803d;
 }
